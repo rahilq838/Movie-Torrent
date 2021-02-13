@@ -35,16 +35,22 @@ class _GameInfoState extends State<GameInfo> {
     // 3 se language 5 se release 7 se genre
     rawDescription = document.getElementsByTagName("p");
 
-    debugPrint("7"+rawDescription[7].innerHtml);
-    debugPrint("8"+rawDescription[8].innerHtml);
+    debugPrint("7" + rawDescription[7].innerHtml);
+    debugPrint("8" + rawDescription[8].innerHtml);
 
     if (rawDescription[6].innerHtml.contains("Minimum:")) {
       gameInformation["systemRequirementsMin"] =
           rawDescription[6].innerHtml.replaceAll('<br>', '');
+      gameInformation["systemRequirementsMax"] =
+          rawDescription[7].innerHtml.replaceAll('<br>', '');
       // debugPrint(rawDescription[6].innerHtml.replaceAll('<br>', ''));
       print("in if");
     } else {
       gameInformation["descP2"] = rawDescription[6].innerHtml;
+      gameInformation["systemRequirementsMin"] =
+          rawDescription[7].innerHtml.replaceAll('<br>', '');
+      gameInformation["systemRequirementsMax"] =
+          rawDescription[8].innerHtml.replaceAll('<br>', '');
     }
     gameInformation["descP1"] = rawDescription[5].innerHtml;
     gameInformation["genre"] = gameAttributes[7].innerHtml;
@@ -63,7 +69,10 @@ class _GameInfoState extends State<GameInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.game_name),),
+      appBar: AppBar(
+        title: Text(widget.game_name),
+        elevation: 0.0,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -150,6 +159,31 @@ class _GameInfoState extends State<GameInfo> {
                     color: Colors.blue),
                 child: Text(
                   gameInformation["descP1"] + gameInformation["descP2"],
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.blue),
+                child: Text(
+                  "System Requirements",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                      color: Colors.white),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.blue),
+                child: Text(
+                  gameInformation["systemRequirementsMin"] +"\n\n"+ gameInformation["systemRequirementsMax"],
                   style: TextStyle(color: Colors.white),
                 ),
               ),
